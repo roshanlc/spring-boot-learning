@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:th="http://www.thymeleaf.org">
+      xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
     <title>Todo App - Thymeleaf</title>
 </head>
@@ -78,7 +78,7 @@
         font-family: sans-serif;
     }
 
-    .todo-text{
+    .todo-text {
         min-width: 25rem;
     }
 
@@ -104,27 +104,8 @@
         height: auto;
     }
 
-    /* Classes */
-    .container {
-        max-width: 960px;
-        margin: 0 auto;
-    }
-
-    .btn-primary {
-        background-color: #000;
-        color: #fff;
-    }
-
-    .btn-secondary {
-        background-color: #fff;
-        color: #000;
-    }
-
-    .text-center {
-        text-align: center;
-    }
-
     footer {
+        font-size: 0.7rem;
         position: fixed;
         left: 0;
         bottom: 0;
@@ -132,32 +113,42 @@
         text-align: center;
         padding-bottom: 2px;
     }
-
-
 </style>
 <body>
 <h1>Todo App</h1>
-
 <form th:action="@{/todos}" method="post">
-    <input type="text" name="title" placeholder="Enter a todo item..." class="todo-text" id="todo-content"  th:required="true"/>
+    <input type="text" name="title" placeholder="Enter a todo item..." class="todo-text" id="todo-content"
+           th:required="true"/>
     <button type="submit" id="add">Add</button>
 </form>
-
-
+<span th:text="${message}" id="msg-box" style="color:red;padding:1px;"></span>
 <ol>
     <li th:each="todo : ${todos}">
-        <span th:text="${todo.title}"></span>
-       | Completed: <span th:text="${todo.completed}"> </span>
-
-        <button type="button" th:onclick="@{'/todos/' + ${todo.id} + '/delete'}">Delete</button>
-        <button type="button" th:onclick="@{'/todos/' + ${todo.id} + '/complete'}">Complete</button>
+        <div style="display: flex; flex-direction: row; justify-content: space-evenly; justify-items: center;">
+            Title: <span th:text="${todo.title}"> </span>
+            | Completed: <span th:text="${todo.completed}"> </span>
+            <form th:action="@{'/todos/' + ${todo.id} + '/delete'}" method="get">
+                <button type="submit">Delete</button>
+            </form>
+            <form th:action="@{'/todos/' + ${todo.id} + '/complete'}" method="get">
+                <button type="submit">Complete</button>
+            </form>
+        </div>
     </li>
 </ol>
 
 <footer>
+    <hr/>
     A basic todo app implemented with thymeleaf and spring boot.
     <br/>
     Author: Roshan Lamichhane
 </footer>
 </body>
+<script>
+    // auto-hide msg after 5 seconds
+    const msgBox = document.getElementById("msg-box");
+    setTimeout(function () {
+        msgBox.style.display = "none";
+    }, 5000);
+</script>
 </html>

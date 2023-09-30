@@ -49,6 +49,11 @@ public class TodoItem {
         this.completed = completed;
     }
 
+    public TodoItem( String title) {
+        this.title = title;
+        this.completed=false;
+    }
+
     @Override
     public String toString() {
         return "TodoItem{" +
