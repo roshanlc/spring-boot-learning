@@ -44,9 +44,9 @@ public class TodoItem {
         this.completed = completed;
     }
 
-    public TodoItem(Long id, String title) {
-        this.id = id;
+    public TodoItem( String title, boolean completed) {
         this.title = title;
+        this.completed = completed;
     }
 
     @Override
