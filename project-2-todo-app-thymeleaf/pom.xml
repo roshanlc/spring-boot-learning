@@ -36,6 +36,18 @@
             <artifactId>jedis</artifactId>
             <version>4.4.5</version>
         </dependency>
+        <!-- https://mvnrepository.com/artifact/commons-codec/commons-codec -->
+        <dependency>
+            <groupId>commons-codec</groupId>
+            <artifactId>commons-codec</artifactId>
+            <version>1.16.0</version>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/org.bitcoinj/bitcoinj-core -->
+        <dependency>
+            <groupId>org.bitcoinj</groupId>
+            <artifactId>bitcoinj-core</artifactId>
+            <version>0.17-alpha2</version>
+        </dependency>
 
         <dependency>
             <groupId>org.springframework.restdocs</groupId>
