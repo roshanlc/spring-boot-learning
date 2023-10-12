@@ -1,0 +1,23 @@
+version: "3.8"
+services:
+  redis:
+    image: redis:7.2.1-alpine
+    container_name: redis_container
+    ports:
+      - "6379:6379"
+    networks:
+      - home
+
+  backend:
+    build: .
+    container_name: link_shortener
+    ports:
+      - "8080:8080"
+    environment:
+      - SPRING_DATA_REDIS_HOST=redis
+    networks:
+      - home
+
+networks:
+  home:
+    name: home
