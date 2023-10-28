@@ -8,6 +8,7 @@ public class TaskMgmtBackendApplication {
 
     public static void main(String[] args) {
         SpringApplication.run(TaskMgmtBackendApplication.class, args);
+
     }
 
 }

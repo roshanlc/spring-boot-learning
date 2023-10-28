@@ -1,0 +1,13 @@
+- [ ] Database Schema
+- [ ] Models
+- [ ] Repository
+- [ ] Service
+- [ ] JWT security
+- [ ] Controllers
+    - [ ] Login
+    - [ ] Signup
+    - [ ] Create New task
+    - [ ] Update task
+    - [ ] Delete task
+- [ ] Basic Tests
+- [ ] CORS
