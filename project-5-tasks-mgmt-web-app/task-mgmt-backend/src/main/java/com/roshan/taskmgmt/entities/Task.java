@@ -13,11 +13,12 @@ public class Task implements Serializable {
 
     private String title;
 
+    @Enumerated(EnumType.STRING)
     private TaskStatus status;
 
     @ManyToOne
-    @JoinColumn(name = "user_id")
-    private User user;
+    @JoinColumn(name = "users_id")
+    private Users users;
 
     public Long getId() {
         return id;
@@ -43,12 +44,12 @@ public class Task implements Serializable {
         this.status = status;
     }
 
-    public User getUser() {
-        return user;
+    public Users getUser() {
+        return users;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setUser(Users users) {
+        this.users = users;
     }
 
     @Override
@@ -57,7 +58,7 @@ public class Task implements Serializable {
                 "id=" + id +
                 ", title='" + title + '\'' +
                 ", status=" + status +
-                ", user=" + user +
+                ", user=" + users +
                 '}';
     }
 }

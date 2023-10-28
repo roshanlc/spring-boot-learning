@@ -3,10 +3,10 @@ package com.roshan.taskmgmt.entities;
 import jakarta.persistence.*;
 
 import java.io.Serializable;
-import java.util.Set;
+import java.util.List;
 
 @Entity
-public class User implements Serializable {
+public class Users implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -19,8 +19,8 @@ public class User implements Serializable {
 
     private String password;
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
-    private Set<Task> task;
+    @OneToMany(mappedBy = "users", cascade = CascadeType.ALL)
+    private List<Task> task;
 
     public Long getId() {
         return id;
@@ -54,11 +54,11 @@ public class User implements Serializable {
         this.password = password;
     }
 
-    public Set<Task> getTask() {
+    public List<Task> getTask() {
         return task;
     }
 
-    public void setTask(Set<Task> task) {
+    public void setTask(List<Task> task) {
         this.task = task;
     }
 
