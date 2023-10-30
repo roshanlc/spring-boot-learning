@@ -26,19 +26,7 @@ public class JWTService {
 
     // extract all claims from jwt token payload
     public Claims extractAllClaims(String token) throws JwtException {
-        try {
-            return Jwts.parser().verifyWith(getSignKey()).build().parseSignedClaims(token).getPayload();
-        } catch (ExpiredJwtException e) {
-            throw new JwtException("Expired JWT token");
-        } catch (MalformedJwtException e) {
-            throw new JwtException("Malformed JWT token");
-        } catch (SignatureException e) {
-            throw new JwtException("Invalid JWT signature");
-        } catch (UnsupportedJwtException e) {
-            throw new JwtException("Unsupported JWT token");
-        } catch (Exception e) {
-            throw new JwtException("Unknown JWT exception");
-        }
+        return Jwts.parser().verifyWith(getSignKey()).build().parseSignedClaims(token).getPayload();
     }
 
     public SecretKey getSignKey() {
@@ -47,8 +35,8 @@ public class JWTService {
     }
 
     public <T> T extractClaim(String token, Function<Claims, T> claimsResolver) {
-            final Claims claims = extractAllClaims(token);
-            return claimsResolver.apply(claims);
+        final Claims claims = extractAllClaims(token);
+        return claimsResolver.apply(claims);
     }
 
     // using the standard claims: "subject"
@@ -69,16 +57,14 @@ public class JWTService {
         return (username.equals(userDetails.getUsername())) && !isTokenExpired(token);
     }
 
-    // eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJkZW1vQGRlbW8uY29tIiwiaWF0IjoxNjk4NjQ4NzA4LCJleHAiOjE2OTg3MzUxMDh9.eOp8L2Lj8ySDiRkRVZmH_APUgn0FXvvc22TJXu06p8I
     public String createToken(Map<String, Object> claims, String username) {
         return Jwts
                 .builder()
                 .claims(claims)
                 .subject(username)
                 .issuedAt(new Date(System.currentTimeMillis()))
-                .expiration(new Date(System.currentTimeMillis() + jwtExpiration))//* 1000))
-//                .encryptWith(getSignKey(), Jwts.ENC.A128CBC_HS256)
-                .signWith(getSignKey(), SignatureAlgorithm.HS256) // hopefully the above is equivalent of this
+                .expiration(new Date(System.currentTimeMillis() + jwtExpiration * 1000))
+                .signWith(getSignKey(), SignatureAlgorithm.HS256)
                 .compact();
     }
 
