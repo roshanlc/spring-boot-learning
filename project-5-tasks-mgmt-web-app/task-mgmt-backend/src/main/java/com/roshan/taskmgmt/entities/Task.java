@@ -1,5 +1,8 @@
 package com.roshan.taskmgmt.entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 
 import java.io.Serializable;
@@ -18,6 +21,7 @@ public class Task implements Serializable {
 
     @ManyToOne
     @JoinColumn(name = "users_id")
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private Users users;
 
     public Long getId() {
@@ -48,7 +52,7 @@ public class Task implements Serializable {
         return users;
     }
 
-    public void setUser(Users users) {
+    public void setUsers(Users users) {
         this.users = users;
     }
 

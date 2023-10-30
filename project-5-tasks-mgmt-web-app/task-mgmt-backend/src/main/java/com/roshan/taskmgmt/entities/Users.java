@@ -1,5 +1,7 @@
 package com.roshan.taskmgmt.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import org.springframework.security.core.GrantedAuthority;
@@ -25,6 +27,7 @@ public class Users implements Serializable, UserDetails {
     private String password;
 
     @OneToMany(mappedBy = "users", cascade = CascadeType.ALL)
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private List<Task> task;
 
     public Users() {
