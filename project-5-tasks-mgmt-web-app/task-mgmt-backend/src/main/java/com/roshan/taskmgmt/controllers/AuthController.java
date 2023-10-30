@@ -32,7 +32,7 @@ public class AuthController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<LoginResponse> authenticate(@RequestBody LoginUser loginUser){
+    public ResponseEntity<LoginResponse> authenticate(@RequestBody LoginUser loginUser) throws  Exception{
         Users authenticatedUser = authenticationService.authenticate(loginUser);
         String jwtToken = jwtService.generateToken(authenticatedUser.getUsername());
         LoginResponse loginResponse = new LoginResponse(jwtToken, jwtService.extractExpiration(jwtToken).getTime());
