@@ -1,7 +1,13 @@
 package com.roshan.taskmgmt.entities;
 
-public class RegisterUser {
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
+import java.io.Serializable;
+
+public class RegisterUser implements Serializable {
     private String email;
+
     private String password;
     private String name;
 
