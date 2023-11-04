@@ -44,7 +44,18 @@ public class TaskController {
         return ResponseEntity.ok(taskRepository.findAllByUsers_Email(email));
     }
 
-    @GetMapping("/tasks/{status}")
+    @GetMapping("/tasks/{id}")
+    public ResponseEntity<?> singleTaskHandler(@PathVariable(value = "id",required = true) long id) {
+        String email = SecurityContextHolder.getContext().getAuthentication().getName();
+        Task data = taskRepository.findByUsers_EmailAndId(email, id);
+        // no task could be found
+        if (data == null) {
+            throw new EntityNotFoundException("requested task id could not found be found for this user.");
+        }
+        return ResponseEntity.ok(data);
+    }
+
+    @GetMapping("/tasks/status/{status}")
     public ResponseEntity<List<Task>> tasksWithStatusHandler(@PathVariable(value = "status") String status) {
         boolean isProperFilter = Arrays.stream(TaskStatus.values()).anyMatch(taskStatus -> taskStatus.name().equals(status.toUpperCase()));
 
