@@ -22,6 +22,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/v1")
+@CrossOrigin
 public class TaskController {
 
     private final TaskRepository taskRepository;
@@ -115,12 +116,4 @@ public class TaskController {
         taskRepository.delete(data);
         return ResponseEntity.ok(data);
     }
-    // TODO:
-    // 1.[x] Update task
-    // 2.[x] Delete task
-    // 3.[ ] Get a single task details (should work for the current user's task only)
-    // 4.[x] Get tasks based on ongoing, todo, done
-    // 4.[ ] Rate limiting ????
-    // 5.[ ] CORS
-
 }
