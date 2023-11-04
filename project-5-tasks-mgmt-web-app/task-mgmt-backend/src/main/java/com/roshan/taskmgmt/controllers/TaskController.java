@@ -70,7 +70,7 @@ public class TaskController {
     }
 
     @PutMapping("/tasks/{id}")
-    public ResponseEntity<?> deleteTaskHandler(@PathVariable(value = "id") long id, @RequestBody Task body) {
+    public ResponseEntity<?> updateTaskHandler(@PathVariable(value = "id") long id, @RequestBody Task body) {
         String email = SecurityContextHolder.getContext().getAuthentication().getName();
         Task data = taskRepository.findByUsers_EmailAndId(email, id);
         // no task could be found
@@ -91,9 +91,22 @@ public class TaskController {
         var updated = taskRepository.save(data);
         return ResponseEntity.ok(updated);
     }
+
+    @DeleteMapping("/tasks/{id}")
+    public ResponseEntity<?> deleteTaskHandler(@PathVariable(value = "id") long id) {
+        String email = SecurityContextHolder.getContext().getAuthentication().getName();
+        Task data = taskRepository.findByUsers_EmailAndId(email, id);
+        // no task could be found
+        if (data == null) {
+            throw new EntityNotFoundException("requested task id could not found be found for this user.");
+        }
+
+        taskRepository.delete(data);
+        return ResponseEntity.ok(data);
+    }
     // TODO:
     // 1.[x] Update task
-    // 2.[ ] Delete task
+    // 2.[x] Delete task
     // 3.[ ] Get a single task details (should work for the current user's task only)
     // 4.[x] Get tasks based on ongoing, todo, done
     // 4.[ ] Rate limiting ????
