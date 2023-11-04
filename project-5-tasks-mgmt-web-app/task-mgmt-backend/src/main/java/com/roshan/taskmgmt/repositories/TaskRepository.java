@@ -9,4 +9,5 @@ import java.util.List;
 @Repository
 public interface TaskRepository extends CrudRepository<Task, Long> {
     List<Task> findAllByUsers_Email(String email);
+    Task findByUsers_EmailAndId(String email, long taskId);
 }
