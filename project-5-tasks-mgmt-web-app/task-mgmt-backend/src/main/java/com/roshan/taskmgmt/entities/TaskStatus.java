@@ -2,6 +2,6 @@ package com.roshan.taskmgmt.entities;
 
 public enum TaskStatus {
     TODO,
-    IN_PROGRESS,
+    ONGOING,
     DONE
 }

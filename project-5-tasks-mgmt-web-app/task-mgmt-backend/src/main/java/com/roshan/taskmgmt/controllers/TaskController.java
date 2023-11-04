@@ -12,8 +12,11 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
+import org.yaml.snakeyaml.util.EnumUtils;
 
 import java.lang.reflect.Array;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -41,6 +44,20 @@ public class TaskController {
         return ResponseEntity.ok(taskRepository.findAllByUsers_Email(email));
     }
 
+    @GetMapping("/tasks/{status}")
+    public ResponseEntity<List<Task>> tasksWithStatusHandler(@PathVariable(value = "status") String status) {
+        boolean isProperFilter = Arrays.stream(TaskStatus.values()).anyMatch(taskStatus -> taskStatus.name().equals(status.toUpperCase()));
+
+        // for improper filter
+        if (!isProperFilter) {
+            throw new EntityNotFoundException("no such filter: " + status + " found");
+        }
+
+        String email = SecurityContextHolder.getContext().getAuthentication().getName();
+        List<Task> tasks = taskRepository.findAllByUsers_EmailAndStatus(email, TaskStatus.valueOf(status.toUpperCase()));
+        return ResponseEntity.ok(tasks);
+    }
+
     @PostMapping("/tasks")
     public ResponseEntity<?> createTaskHandler(@RequestBody Task task) {
         String email = SecurityContextHolder.getContext().getAuthentication().getName();
@@ -62,11 +79,11 @@ public class TaskController {
         }
 
         // modify the task as per the request body
-        if(body.getStatus()!=null && !body.getStatus().equals("")){
+        if (body.getStatus() != null && !body.getStatus().equals("")) {
             // update status
             data.setStatus(body.getStatus());
         }
-        if(body.getTitle()!=null && !body.getTitle().equals("")){
+        if (body.getTitle() != null && !body.getTitle().equals("")) {
             // update title
             data.setTitle(body.getTitle());
         }
@@ -78,7 +95,7 @@ public class TaskController {
     // 1.[x] Update task
     // 2.[ ] Delete task
     // 3.[ ] Get a single task details (should work for the current user's task only)
-    // 4.[] Get tasks based on ongoing, in_progress, done
+    // 4.[x] Get tasks based on ongoing, todo, done
     // 4.[ ] Rate limiting ????
     // 5.[ ] CORS
 
